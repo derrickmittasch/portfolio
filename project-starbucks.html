@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starbucks Customization Redesign — Derrick Mittasch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root { --black: #080808; --white: #f2f0eb; --muted: rgba(242,240,235,0.35); --border: rgba(242,240,235,0.08); }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; }
+    nav::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, transparent 100%); pointer-events: none; }
+    .nav-logo-proj { position: relative; z-index: 1; text-decoration: none; display: block; }
+    .nav-counter { font-size: 11px; color: rgba(242,240,235,0.2); letter-spacing: 0.08em; position: relative; z-index: 1; }
+    .project-hero { height: 100vh; min-height: 600px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 3rem 4rem; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #080808 0%, #0d1208 50%, #080d08 100%); display: flex; align-items: center; justify-content: center; }
+    .hero-bg-text { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 14vw, 200px); color: rgba(0,168,80,0.04); letter-spacing: -0.02em; text-align: center; line-height: 0.85; user-select: none; }
+    .hero-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.3) 60%, transparent 100%); }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(242,240,235,0.3); margin-bottom: 1rem; }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 7vw, 88px); line-height: 0.92; letter-spacing: 0.01em; color: var(--white); margin-bottom: 1rem; }
+    .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .hero-tag { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(242,240,235,0.3); border: 0.5px solid rgba(242,240,235,0.15); padding: 4px 10px; border-radius: 20px; }
+
+    .case-body { max-width: 900px; padding: 5rem 3rem; margin: 0 auto; }
+    .case-block { margin-bottom: 4rem; }
+    .case-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(242,240,235,0.22); margin-bottom: 1.25rem; }
+    .case-text { font-size: 16px; line-height: 1.85; color: rgba(242,240,235,0.55); font-weight: 300; }
+    .case-text strong { color: rgba(242,240,235,0.88); font-weight: 500; }
+
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; padding-bottom: 3rem; border-bottom: 0.5px solid var(--border); }
+    .meta-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(242,240,235,0.22); margin-bottom: 0.4rem; }
+    .meta-value { font-size: 14px; font-weight: 400; color: rgba(242,240,235,0.65); }
+
+    /* Wide 2:1 — for wire, flow, compare */
+    .img-wide { width: 100%; aspect-ratio: 2/1; overflow: hidden; background: rgba(242,240,235,0.03); border: 0.5px solid rgba(242,240,235,0.07); margin-bottom: 1.5rem; }
+    .img-wide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Phone screens portrait — 1036x2000 roughly 1:2 */
+    .img-phone-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .img-phone { aspect-ratio: 1/2; overflow: hidden; background: rgba(242,240,235,0.03); border: 0.5px solid rgba(242,240,235,0.07); }
+    .img-phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+    .quote { border-left: 2px solid rgba(242,240,235,0.15); padding: 1rem 1.5rem; margin: 2rem 0; font-size: 15px; line-height: 1.7; color: rgba(242,240,235,0.4); font-style: italic; }
+    .quote cite { display: block; margin-top: 0.5rem; font-size: 12px; font-style: normal; color: rgba(242,240,235,0.25); letter-spacing: 0.04em; }
+
+    .closing { font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 4vw, 48px); color: rgba(242,240,235,0.2); line-height: 1.1; letter-spacing: 0.02em; padding: 3rem 0; border-top: 0.5px solid var(--border); }
+    .proj-footer { padding: 3rem; border-top: 0.5px solid var(--border); display: flex; gap: 1rem; }
+    .proj-footer-btn { flex: 1; padding: 1.25rem 1.5rem; border: 0.5px solid rgba(242,240,235,0.1); text-decoration: none; transition: border-color 0.3s, background 0.3s; display: block; }
+    .proj-footer-btn:hover { border-color: rgba(242,240,235,0.25); background: rgba(242,240,235,0.03); }
+    .pfb-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242,240,235,0.2); margin-bottom: 5px; }
+    .pfb-title { font-size: 15px; font-weight: 500; color: rgba(242,240,235,0.6); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .project-hero { padding: 0 1.5rem 3rem; }
+      .case-body { padding: 3rem 1.5rem; }
+      .meta-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .proj-footer { padding: 2rem 1.5rem; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo-proj" href="index.html" aria-label="Derrick Mittasch — Home">
+      <img src="logo-mark.svg" alt="Derrick Mittasch" style="height: 38px; width: auto; display: block;">
+    </a>
+    <span class="nav-counter">02 / 04</span>
+  </nav>
+
+  <section class="project-hero">
+    <div class="hero-bg" style="background:none;"><img src="images/thumb-starbucks.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.55);"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">UX/UI Redesign — 2024</div>
+      <h1 class="hero-title">Starbucks Customization<br>Redesign</h1>
+      <div class="hero-tags">
+        <span class="hero-tag">UX/UI Design</span>
+        <span class="hero-tag">App Design</span>
+        <span class="hero-tag">Brand</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-body">
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Brand</div><div class="meta-value">Starbucks Coffee Company</div></div>
+      <div class="meta-item"><div class="meta-label">Year</div><div class="meta-value">2024</div></div>
+      <div class="meta-item"><div class="meta-label">Project Type</div><div class="meta-value">UX/UI Redesign</div></div>
+      <div class="meta-item"><div class="meta-label">Role</div><div class="meta-value">Project Lead (Solo)</div></div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Background</div>
+      <p class="case-text">For five years I worked as a partner — and eventually shift supervisor — at Starbucks. I know the operation from the inside. And I knew the app wasn't keeping up with the experience we were trying to create in store. The customization flow was the biggest problem. <strong>Popular drinks buried at the bottom. Sauces and syrups split into separate sections despite doing the same job. A cart button eating up screen real estate.</strong> None of it felt like Starbucks — warm, personal, yours.</p>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Research & User Flow</div>
+      <div class="img-wide lb-img">
+        <img src="images/starbucks-flow.png" alt="User flow diagram">
+      </div>
+      <p class="case-text">I used the Starbucks experience itself as the design benchmark — if a part of the app wasn't delivering that warm, welcoming feeling, it had to change. Three key pain points emerged: visibility of popular drinks, navigation inefficiencies, and an overly complex customization process.</p>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Wireframing & Prototyping</div>
+      <div class="img-wide lb-img">
+        <img src="images/starbucks-wire1.png" alt="Wireframe and prototype comparison">
+      </div>
+      <p class="case-text">Side-by-side sketches of the existing customization page alongside the proposed redesign. Each decision was measured against the problem statement — only moving forward when a design genuinely added value.</p>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Before & After</div>
+      <div class="img-wide lb-img">
+        <img src="images/starbucks-compare.png" alt="Before and after comparison">
+      </div>
+      <p class="case-text">The constraint was working entirely within Starbucks' established brand system — no new colors, no new type. Designing within a narrow range of cream tones, with no bold color to lean on, pushed me to find depth through <strong>spacing, weight, and structure alone</strong>.</p>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Final Screens</div>
+      <p class="case-text" style="margin-bottom: 2rem;">Click either screen to view full size.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 700px; margin: 0 auto 1.5rem;">
+        <div class="lb-img" style="aspect-ratio: 1/2; overflow: hidden; background: rgba(242,240,235,0.03); border: 0.5px solid rgba(242,240,235,0.07); cursor: zoom-in;">
+          <img src="images/starbucks-final1.png" alt="Final screen 1" style="width:100%; height:100%; object-fit:contain; object-position:top; display:block;">
+        </div>
+        <div class="lb-img" style="aspect-ratio: 1/2; overflow: hidden; background: rgba(242,240,235,0.03); border: 0.5px solid rgba(242,240,235,0.07); cursor: zoom-in;">
+          <img src="images/starbucks-final2.png" alt="Final screen 2" style="width:100%; height:100%; object-fit:contain; object-position:top; display:block;">
+        </div>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">User Feedback</div>
+      <div class="quote">
+        "It looks great. I like how the core changes and options are on the first screen without having to navigate through a ton of stuff. It gets a little confusing on the current app."
+        <cite>— Joey, frequent Starbucks customer</cite>
+      </div>
+    </div>
+
+    <div class="case-block">
+      <div class="case-label">Looking Forward</div>
+      <p class="case-text">One concept that emerged during the project: <strong>Community Creations</strong> — allowing customers to share their unique drink customizations with others. Inspired by the weekly "Barista Pick" we run in store, this feature would turn the app into a space for discovery, not just ordering.</p>
+    </div>
+
+    <div class="closing">Designing within<br>the rules.</div>
+  </div>
+
+  <div class="proj-footer">
+    <a class="proj-footer-btn" href="project-social.html">
+      <div class="pfb-label">Previous Project</div>
+      <div class="pfb-title">← Destroy the Rich</div>
+    </a>
+    <a class="proj-footer-btn" href="project-tiger.html" style="text-align: right;">
+      <div class="pfb-label">Next Project</div>
+      <div class="pfb-title">The Tiger Trials →</div>
+    </a>
+  </div>
+<script src="lightbox.js"></script>
+</body>
+</html>
